@@ -27,7 +27,7 @@ public class AddressController {
         return ResponseEntity.ok(addressService.findAddressById(idAddress));
     }
 
-    @GetMapping("/{namePerson}")
+    @GetMapping("/findAddressByNamePerson/{namePerson}")
     public ResponseEntity<List<Address>> findAllAddressByNamePerson(@PathVariable String namePerson) {
         return ResponseEntity.ok(addressService.findAllAddressByNamePerson(namePerson));
     }

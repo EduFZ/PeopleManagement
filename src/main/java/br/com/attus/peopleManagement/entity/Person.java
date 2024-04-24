@@ -18,6 +18,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_person")
     private Long idPerson;
     private String name;
     private LocalDate birth;

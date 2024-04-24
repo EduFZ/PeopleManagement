@@ -41,16 +41,6 @@ public class PersonService {
 
         BeanUtils.copyProperties(person, personById, "id");
 
-//        if (person.getName() != null) {
-//            personById.setName(person.getName());
-//        }
-//        if (person.getBirth() != null) {
-//            personById.setBirth(person.getBirth());
-//        }
-//        if (person.getAddress() != null) {
-//            personById.setAddress(person.getAddress());
-//        }
-
         return personRepository.save(personById);
 
     }

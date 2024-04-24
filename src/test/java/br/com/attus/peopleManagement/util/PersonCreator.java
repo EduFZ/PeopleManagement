@@ -11,6 +11,7 @@ public class PersonCreator {
 
     public static Person createPersonOne() {
         Person person = new Person();
+        person.setIdPerson(1L);
         person.setName("Fulano de Tal");
         person.setBirth(LocalDate.of(1998, 6, 10));
 
@@ -25,6 +26,7 @@ public class PersonCreator {
 
     public static Person createPersonTwo() {
         Person person = new Person();
+        person.setIdPerson(2L);
         person.setName("Ciclano de Tal");
         person.setBirth(LocalDate.of(2000, 5, 15));
 

@@ -22,6 +22,7 @@ public class Address {
     private Long number;
     private String city;
     private String state;
+    @Column(name = "main_address")
     private Boolean mainAddress;
     @ManyToOne
     @JoinColumn(name = "person_id")

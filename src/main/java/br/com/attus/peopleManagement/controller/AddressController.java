@@ -1,7 +1,6 @@
 package br.com.attus.peopleManagement.controller;
 
 import br.com.attus.peopleManagement.entity.Address;
-import br.com.attus.peopleManagement.entity.Person;
 import br.com.attus.peopleManagement.exceptions.ExceptionMessage;
 import br.com.attus.peopleManagement.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,11 @@ public class AddressController {
     @GetMapping("/{namePerson}")
     public ResponseEntity<List<Address>> findAllAddressByNamePerson(@PathVariable String namePerson) {
         return ResponseEntity.ok(addressService.findAllAddressByNamePerson(namePerson));
+    }
+
+    @GetMapping("/mainAddress/{namePerson}")
+    public ResponseEntity<Address> findMainAddressByNamePerson(@PathVariable String namePerson) {
+        return ResponseEntity.ok(addressService.findMainAddressByNamePerson(namePerson));
     }
 
     @PostMapping("/saveAddress")

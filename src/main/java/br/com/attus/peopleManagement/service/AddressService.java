@@ -28,10 +28,15 @@ public class AddressService {
         return addressRepository.findAllAddressByNamePerson(name);
     }
 
+    public Address findMainAddressByNamePerson(String name) {
+        return addressRepository.findMainAddressByNamePerson(name);
+    }
+
     public Address saveAddress(Address address) {
         return addressRepository.save(address);
     }
 
+    //Neste método, já está incluso a opção de selecionar como endereço principal ou não.
     public Address replaceAddress(Long idAddress, Address address) throws ExceptionMessage {
         Address addressById = addressRepository.findAddressById(idAddress);
 

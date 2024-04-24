@@ -21,4 +21,8 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     @Query("SELECT a FROM Address a WHERE a.person.name = :name")
     List<Address> findAllAddressByNamePerson(@Param("name") String name);
 
+    @Query("SELECT a FROM Address a WHERE (a.person.name = :name) AND" +
+            "(a.mainAddress = true) ")
+    Address findMainAddressByNamePerson(@Param("name") String name);
+
 }

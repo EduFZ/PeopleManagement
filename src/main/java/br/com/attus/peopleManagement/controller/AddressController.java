@@ -42,7 +42,7 @@ public class AddressController {
         return new ResponseEntity<>(addressService.saveAddress(address), HttpStatus.CREATED);
     }
 
-    @PostMapping("/replaceAddress/{idAddress}")
+    @PutMapping("/replaceAddress/{idAddress}")
     public ResponseEntity<Address> replacePerson(@PathVariable Long idAddress, @RequestBody Address address) throws ExceptionMessage {
         return new ResponseEntity<>(addressService.replaceAddress(idAddress, address), HttpStatus.CREATED);
     }

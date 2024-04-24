@@ -27,7 +27,7 @@ public class PersonController {
         return ResponseEntity.ok(personService.findPersonById(idPerson));
     }
 
-    @GetMapping("/{namePerson}")
+    @GetMapping("/findByName/{namePerson}")
     public ResponseEntity<Person> findPersonByName(@PathVariable String namePerson) {
         return ResponseEntity.ok(personService.findPersonByName(namePerson));
     }
@@ -37,7 +37,7 @@ public class PersonController {
         return new ResponseEntity<>(personService.savePerson(person), HttpStatus.CREATED);
     }
 
-    @PostMapping("/replacePerson/{idPerson}")
+    @PutMapping("/replacePerson/{idPerson}")
     public ResponseEntity<Person> replacePerson(@PathVariable Long idPerson, @RequestBody Person person) throws ExceptionMessage {
         return new ResponseEntity<>(personService.replacePerson(idPerson, person), HttpStatus.CREATED);
     }

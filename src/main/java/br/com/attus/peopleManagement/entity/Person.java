@@ -1,5 +1,6 @@
 package br.com.attus.peopleManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,9 @@ public class Person {
     private Long idPerson;
     private String name;
     private LocalDate birth;
+    @JoinColumn(nullable = true)
     @OneToMany
+    @JsonManagedReference
     private List<Address> address;
 
 }

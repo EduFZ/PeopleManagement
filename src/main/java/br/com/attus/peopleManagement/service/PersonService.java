@@ -1,7 +1,9 @@
 package br.com.attus.peopleManagement.service;
 
+import br.com.attus.peopleManagement.entity.Address;
 import br.com.attus.peopleManagement.entity.Person;
 import br.com.attus.peopleManagement.exceptions.ExceptionMessage;
+import br.com.attus.peopleManagement.repository.AddressRepository;
 import br.com.attus.peopleManagement.repository.PersonRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +17,8 @@ public class PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
 
     public List<Person> findAllPerson() {
@@ -30,6 +34,28 @@ public class PersonService {
     }
 
     public Person savePerson(Person person) {
+        person = personRepository.save(person);
+
+        List<Address> listAddress = person.getAddress();
+
+        if (listAddress != null && !listAddress.isEmpty()) {
+            for (Address address : listAddress) {
+                Address existingAddress = addressRepository.findAddressById(address.getIdAddress());
+
+                if (existingAddress == null) {
+                    address.setPerson(person);
+                    addressRepository.save(address);
+                } else {
+                    address.setIdAddress(existingAddress.getIdAddress());
+                    address.setPerson(person);
+                }
+            }
+        } else {
+            for (Address address : listAddress) {
+                addressRepository.save(address);
+            }
+        }
+
         return personRepository.save(person);
     }
 

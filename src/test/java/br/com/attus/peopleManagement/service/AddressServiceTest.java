@@ -7,9 +7,11 @@ import br.com.attus.peopleManagement.repository.AddressRepository;
 import br.com.attus.peopleManagement.repository.PersonRepository;
 import br.com.attus.peopleManagement.util.AddressCreator;
 import br.com.attus.peopleManagement.util.PersonCreator;
+import br.com.attus.peopleManagement.validations.AddressCepValidation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -26,6 +28,8 @@ class AddressServiceTest {
 
     @Mock
     private AddressRepository addressRepository;
+    @Mock
+    private AddressCepValidation addressCepValidation;
 
     @Test
     void shouldReturnListAddressWithFindAllAddress() {
@@ -84,13 +88,25 @@ class AddressServiceTest {
     }
 
     @Test
-    void shouldReturnAddressWithSavePerson() {
+    void shouldReturnAddressWithSaveAddress() throws ExceptionMessage {
         Address address = AddressCreator.createMainAddress();
 
         addressService.saveAddress(address);
 
         BDDMockito.then(addressRepository).should().save(address);
         Assertions.assertEquals(1L, address.getIdAddress());
+
+    }
+
+    @Test
+    void shouldReturnExceptionMessageWithSaveAddress() throws ExceptionMessage {
+        Address address = AddressCreator.createMainAddress();
+        address.setCep(12345L);
+
+        BDDMockito.given(addressCepValidation.addressCepValidation(address.getCep())).willReturn(false);
+
+        ExceptionMessage exceptionMessage = Assertions.assertThrows(ExceptionMessage.class, () -> addressService.saveAddress(address));
+        Assertions.assertEquals("CEP inválido", exceptionMessage.getMessage());
 
     }
 

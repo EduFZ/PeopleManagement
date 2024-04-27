@@ -3,6 +3,7 @@ package br.com.attus.peopleManagement.service;
 import br.com.attus.peopleManagement.entity.Address;
 import br.com.attus.peopleManagement.exceptions.ExceptionMessage;
 import br.com.attus.peopleManagement.repository.AddressRepository;
+import br.com.attus.peopleManagement.validations.AddressCepValidation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class AddressService {
 
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private AddressCepValidation addressCepValidation;
 
 
     public List<Address> findAllAddress() {
@@ -32,7 +35,10 @@ public class AddressService {
         return addressRepository.findMainAddressByNamePerson(name);
     }
 
-    public Address saveAddress(Address address) {
+    public Address saveAddress(Address address) throws ExceptionMessage {
+        if (!addressCepValidation.addressCepValidation(address.getCep())) {
+            throw new ExceptionMessage("CEP inválido");
+        }
         return addressRepository.save(address);
     }
 

@@ -38,7 +38,7 @@ public class AddressController {
     }
 
     @PostMapping("/saveAddress")
-    public ResponseEntity<Address> saveAddress(@RequestBody Address address) {
+    public ResponseEntity<Address> saveAddress(@RequestBody Address address) throws ExceptionMessage {
         return new ResponseEntity<>(addressService.saveAddress(address), HttpStatus.CREATED);
     }
 

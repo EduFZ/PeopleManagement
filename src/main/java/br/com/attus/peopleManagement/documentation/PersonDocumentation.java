@@ -55,7 +55,7 @@ public interface PersonDocumentation {
                     @ApiResponse(responseCode = "201", description = "requisição bem-sucedida")
             }
     )
-    ResponseEntity<Person> savePerson(@RequestBody Person person);
+    ResponseEntity<Person> savePerson(@RequestBody Person person) throws ExceptionMessage;
 
     @Operation(
             summary = "Atualizar pessoa",

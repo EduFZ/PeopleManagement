@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +20,8 @@ public class PersonService {
     private PersonRepository personRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private AddressService addressService;
 
 
     public List<Person> findAllPerson() {
@@ -33,7 +36,7 @@ public class PersonService {
         return personRepository.findPersonByName(name);
     }
 
-    public Person savePerson(Person person) {
+    public Person savePerson(Person person) throws ExceptionMessage {
         person = personRepository.save(person);
 
         List<Address> listAddress = person.getAddress();
@@ -44,7 +47,7 @@ public class PersonService {
 
                 if (existingAddress == null) {
                     address.setPerson(person);
-                    addressRepository.save(address);
+                    addressService.saveAddress(address);
                 } else {
                     address.setIdAddress(existingAddress.getIdAddress());
                     address.setPerson(person);
@@ -52,11 +55,11 @@ public class PersonService {
             }
         } else {
             for (Address address : listAddress) {
-                addressRepository.save(address);
+                addressService.saveAddress(address);
             }
         }
 
-        return personRepository.save(person);
+        return person;
     }
 
     public Person replacePerson(Long idPerson, Person person) throws ExceptionMessage {

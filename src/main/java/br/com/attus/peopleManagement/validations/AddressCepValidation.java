@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 public class AddressCepValidation {
 
     public boolean addressCepValidation(Long cep) {
-        return cep == 8;
+        return cep.toString().length() == 8;
     }
 
 }

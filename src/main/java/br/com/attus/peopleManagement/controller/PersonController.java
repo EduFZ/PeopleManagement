@@ -43,7 +43,7 @@ public class PersonController implements PersonDocumentation {
 
     @Override
     @PostMapping("/savePerson")
-    public ResponseEntity<Person> savePerson(@RequestBody Person person) {
+    public ResponseEntity<Person> savePerson(@RequestBody Person person) throws ExceptionMessage {
         return new ResponseEntity<>(personService.savePerson(person), HttpStatus.CREATED);
     }
 

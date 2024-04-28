@@ -37,7 +37,7 @@ public class PersonService {
     }
 
     public Person savePerson(Person person) throws ExceptionMessage {
-        person = personRepository.save(person);
+        Person savedPerson = personRepository.save(person);
 
         List<Address> listAddress = person.getAddress();
 
@@ -59,7 +59,7 @@ public class PersonService {
             }
         }
 
-        return person;
+        return savedPerson;
     }
 
     public Person replacePerson(Long idPerson, Person person) throws ExceptionMessage {

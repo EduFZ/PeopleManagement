@@ -2,6 +2,7 @@ package br.com.attus.peopleManagement.service;
 
 import br.com.attus.peopleManagement.entity.Person;
 import br.com.attus.peopleManagement.exceptions.ExceptionMessage;
+import br.com.attus.peopleManagement.repository.AddressRepository;
 import br.com.attus.peopleManagement.repository.PersonRepository;
 import br.com.attus.peopleManagement.util.PersonCreator;
 import org.junit.jupiter.api.Assertions;
@@ -23,6 +24,10 @@ class PersonServiceTest {
 
     @Mock
     private PersonRepository personRepository;
+    @Mock
+    private AddressRepository addressRepository;
+    @Mock
+    private AddressService addressService;
 
     @Test
     void shouldReturnListPersonWithFindAllPerson() {
@@ -66,7 +71,7 @@ class PersonServiceTest {
     }
 
     @Test
-    void shouldReturnPersonWithSavePerson() {
+    void shouldReturnPersonWithSavePerson() throws ExceptionMessage {
         Person person = PersonCreator.createPersonOne();
 
         personService.savePerson(person);

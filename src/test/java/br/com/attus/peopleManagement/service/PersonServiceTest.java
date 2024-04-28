@@ -1,9 +1,11 @@
 package br.com.attus.peopleManagement.service;
 
+import br.com.attus.peopleManagement.entity.Address;
 import br.com.attus.peopleManagement.entity.Person;
 import br.com.attus.peopleManagement.exceptions.ExceptionMessage;
 import br.com.attus.peopleManagement.repository.AddressRepository;
 import br.com.attus.peopleManagement.repository.PersonRepository;
+import br.com.attus.peopleManagement.util.AddressCreator;
 import br.com.attus.peopleManagement.util.PersonCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
@@ -80,6 +85,21 @@ class PersonServiceTest {
         Assertions.assertEquals(1L, person.getIdPerson());
 
     }
+
+    @Test
+    void shouldSaveAllAddressesInListIfPersonDoesNotExist() throws ExceptionMessage {
+        Person person = PersonCreator.createPersonOne();
+        Address address1 = AddressCreator.createMainAddress();
+        Address address2 = AddressCreator.createAddress();
+        List<Address> listAddress = Arrays.asList(address1, address2);
+
+        BDDMockito.given(addressRepository.findAddressById(BDDMockito.anyLong())).willReturn(null);
+
+        personService.savePerson(person);
+
+        BDDMockito.then(addressService).should(times(2)).saveAddress(BDDMockito.any(Address.class));
+    }
+
 
     @Test
     void shouldReturnPersonWithReplacePerson() throws ExceptionMessage {

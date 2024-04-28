@@ -47,14 +47,8 @@ public class PersonService {
 
                 if (existingAddress == null) {
                     address.setPerson(person);
-                    addressService.saveAddress(address);
-                } else {
-                    address.setIdAddress(existingAddress.getIdAddress());
-                    address.setPerson(person);
+
                 }
-            }
-        } else {
-            for (Address address : listAddress) {
                 addressService.saveAddress(address);
             }
         }
